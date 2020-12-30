@@ -97,7 +97,6 @@ def Computers_moves(lis):
             lis.remove(i)
             dic[num]="X"
             print("Move made by Computer!! ")
-            # move_count +=1
             Board_design()
             break
     else:
@@ -113,7 +112,6 @@ def Player_moves(M, lis):
         if(i == M):
             lis.remove(i)
             dic[M]="O"
-            # move_count += 1
             Board_design()
             break
     else:
@@ -126,9 +124,7 @@ def Input_moves():
     
     move_count = 0
     Temp = 0
-    while(True):                                                        # error occures when no one wins
-        # move_count +=1
-        print("mc:",move_count)
+    while(True):                                                        
         move = int(input("Make Your Move ! [1-9] : " ))
         Player_moves(move, lis)
         move_count +=1
