@@ -5,6 +5,17 @@ import sys
 # Import random library
 import random
 
+# Defining the positions with the help of dict.
+# These are the 9 possible moves.
+dic = {1:" ", 2:" ", 3:" ", 4:" ", 5:" ", 6:" ", 7:" ", 8:" ", 9:" "}
+
+# Winning combinations
+win_combi = [(1,2,3),(4,5,6),(7,8,9),(1,4,7),(2,5,8),(3,6,9),(1,5,9),(3,5,7)]
+    
+# Required for checking doublicate moves
+lis = [i for i in range(1,10)]
+
+
 # Function For Printing Board design in output
 def Board_design():
 
@@ -16,75 +27,23 @@ def Board_design():
     print("--+---+--")
     print(dic[7]+" | "+dic[8]+" | "+dic[9])
     # print("----------------")
-    print("\n")
+    # print("\n")
 
 
 # Function to check winning combinations of computer and Player also.
 def Winning_combinations():
-    # winning combinations of Computer using X
-    # Computer win with horizontal Possible combinations
-    if(dic[1] =="X" and dic[2] =="X" and dic[3] =="X"):
-        print("You loss!!!\n")
-        return True
-    if(dic[4] =="X" and dic[5] =="X" and dic[6] =="X"):
-        print("You loss!!!\n")
-        return True
-    if(dic[7] =="X" and dic[8] =="X" and dic[9] =="X"):
-        print("You loss!!!\n")
-        return True
 
-    # Computer win with vertical Possible combinations
-    if(dic[1] =="X" and dic[4] =="X" and dic[7] =="X"):
-        print("You loss!!!\n")
-        return True
-    if(dic[2] =="X" and dic[5] =="X" and dic[8] =="X"):
-        print("You loss!!!\n")
-        return True
-    if(dic[3] =="X" and dic[6] =="X" and dic[9] =="X"):
-        print("You loss!!!\n")
-        return True
-
-    # Computer win with Digonal Possible combinations
-    if(dic[1] =="X" and dic[5] =="X" and dic[9] =="X"):
-        print("You loss!!!\n")
-        return True
-    if(dic[3] =="X" and dic[5] =="X" and dic[7] =="X"):
-        print("You loss!!!\n")
-        return True
-
-
-    # winning combinations of Player using O
-    # Player win with horizontal Possible combinations
-    if(dic[1] =="O" and dic[2] =="O" and dic[3] =="O"):
-        print("You Won!!!\n")
-        return True
-    if(dic[4] =="O" and dic[5] =="O" and dic[6] =="O"):
-        print("You Won!!!\n")
-        return True
-    if(dic[7] =="O" and dic[8] =="O" and dic[9] =="O"):
-        print("You Won!!!\n")
-        return True
-
-    # Player win with vertical Possible combinations
-    if(dic[1] =="O" and dic[4] =="O" and dic[7] =="O"):
-        print("You Won!!!\n")
-        return True
-    if(dic[2] =="O" and dic[5] =="O" and dic[8] =="O"):
-        print("You Won!!!\n")
-        return True
-    if(dic[3] =="O" and dic[6] =="O" and dic[9] =="O"):
-        print("You Won!!!\n")
-        return True
-
-    # Player win with Digonal Possible combinations
-    if(dic[1] =="O" and dic[5] =="O" and dic[9] =="O"):
-        print("You Won!!!\n")
-        return True
-    if(dic[3] =="O" and dic[5] =="O" and dic[7] =="O"):
-        print("You Won!!!\n")
-        return True
-    
+    for i in win_combi:
+        if(dic[i[0]] == dic[i[1]] == dic[i[2]] == "O"):
+            print("##### Congratulations You Won The Game #####\n")
+            return True
+            # break
+        if(dic[i[0]] == dic[i[1]] == dic[i[2]] == "X"):
+            print("##### You Lost The Game #####\n")
+            return True
+            # break
     return False
+
 
 # Function for Computer moves  
 def Computers_moves(lis):
@@ -103,20 +62,20 @@ def Computers_moves(lis):
         Computers_moves(lis)
 
 
-    
 # Function for Player moves  
-def Player_moves(M, lis):
+def Player_moves(lis):
 
+    move = int(input("Make Your Move ! [1-9] : " ))
     # To check the correct move, is it repeating or not
     for i in lis:
-        if(i == M):
+        if(i == move):
             lis.remove(i)
-            dic[M]="O"
+            dic[move]="O"
             Board_design()
             break
     else:
         print("Please Enter the currect move!!")
-        Input_moves()
+        Player_moves(lis)
 
 
 # Function to take input from Player and also with stoping conditions
@@ -125,10 +84,9 @@ def Input_moves():
     move_count = 0
     Temp = 0
     while(True):                                                        
-        move = int(input("Make Your Move ! [1-9] : " ))
-        Player_moves(move, lis)
+        Player_moves(lis)
         move_count +=1
-        if(Winning_combinations()==True):
+        if(Winning_combinations()):
             Temp = 1
             break
         if(move_count==9):
@@ -136,7 +94,7 @@ def Input_moves():
         else:
             Computers_moves(lis)
             move_count +=1
-            if(Winning_combinations()==True):
+            if(Winning_combinations()):
                 Temp = 1
                 break
             if(move_count==9):
@@ -144,15 +102,9 @@ def Input_moves():
     if(Temp == 0):
         print("$$$  Deuce!  $$$\n")  
 
+
 # main Function where from program execution starts
 if __name__ == "__main__":
-
-    # Defining the positions with the help of dict.
-    # These are the 9 possible moves.
-    dic = {1:" ", 2:" ", 3:" ", 4:" ", 5:" ", 6:" ", 7:" ", 8:" ", 9:" "}
-    
-    # Required for checking doublicate moves
-    lis = [1,2,3,4,5,6,7,8,9]
 
     print("\nYour Moves == 'O'  and  Computers moves == 'X' ")
 
