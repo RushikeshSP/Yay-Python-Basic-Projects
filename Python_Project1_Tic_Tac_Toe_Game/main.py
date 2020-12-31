@@ -65,17 +65,22 @@ def Computers_moves(lis):
 # Function for Player moves  
 def Player_moves(lis):
 
-    move = int(input("Make Your Move ! [1-9] : " ))
-    # To check the correct move, is it repeating or not
-    for i in lis:
-        if(i == move):
-            lis.remove(i)
-            dic[move]="O"
-            Board_design()
-            break
-    else:
-        print("Please Enter the currect move!!")
+    try:
+        move = int(input("Make Your Move ! [1-9] : " ))
+    except Exception:
+        print("Please Enter integer input as a move.")
         Player_moves(lis)
+    else:
+        # To check the correct move, is it repeating or not
+        for i in lis:
+            if(i == move):
+                lis.remove(i)
+                dic[move]="O"
+                Board_design()
+                break
+        else:
+            print("Please Enter the currect move!!")
+            Player_moves(lis)
 
 
 # Function to take input from Player and also with stoping conditions
